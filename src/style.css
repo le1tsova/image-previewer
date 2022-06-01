@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.App_image-preview {
+ position: relative;
+
+}
+
+input {
+    margin: 20px;
+}
