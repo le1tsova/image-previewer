@@ -1,7 +1,7 @@
 import { ChangeEvent, useState, useRef } from "react";
 import "./style.css";
-
 import { v4 as uuidv4 } from "uuid";
+
 import Marker from "./Marker";
 
 type MarkerPercents = {
@@ -28,7 +28,7 @@ function App() {
     }
   };
 
-  const handleOnLoadImg = () => {
+  const updateImageSizes = () => {
     let imgHeight = imgElement?.current?.clientHeight || 0;
     let imgWidth = imgElement?.current?.clientWidth || 0;
 
@@ -52,6 +52,20 @@ function App() {
     }
   };
 
+  (function () {
+    window.addEventListener("resize", resizeThrottler, false);
+
+    let resizeTimeout: NodeJS.Timeout | null;
+    function resizeThrottler() {
+      if (!resizeTimeout) {
+        resizeTimeout = setTimeout(function () {
+          resizeTimeout = null;
+          updateImageSizes();
+        }, 66);
+      }
+    }
+  })();
+
   let coordsMarkers = markers.map(({ percentX, percentY, text, id }) => {
     return {
       coordX: Math.floor((imgSize[0] / 100) * percentX),
@@ -69,9 +83,8 @@ function App() {
             src={imageLink}
             alt="Preview"
             ref={imgElement}
-            onLoad={handleOnLoadImg}
+            onLoad={updateImageSizes}
             onClick={handleAddMarker}
-            id="pucture"
           />
           {coordsMarkers.map(({ coordX, coordY, text, id }) => (
             <Marker coordX={coordX} coordY={coordY} text={text} key={id} />
