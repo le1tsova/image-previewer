@@ -9,9 +9,16 @@ img {
 
 .App_image-preview {
  position: relative;
+}
 
+.marker {
+    position: absolute;
+    background-color: rgba(189, 183, 107, 0.4) ;
+    padding: 2px;
+    border: yellow solid 1px;
 }
 
 input {
     margin: 20px;
 }
+
