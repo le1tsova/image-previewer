@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useRef } from "react";
+import { ChangeEvent, useState, useRef, useEffect, useCallback } from "react";
 import "./style.css";
 import { v4 as uuidv4 } from "uuid";
 
@@ -10,6 +10,8 @@ type MarkerPercents = {
   text: string;
   id: string;
 };
+
+let resizeTimeout: NodeJS.Timeout | null;
 
 function App() {
   const [imageLink, setImageLink] = useState<string | undefined>(undefined);
@@ -28,12 +30,12 @@ function App() {
     }
   };
 
-  const updateImageSizes = () => {
+  const updateImageSizes = useCallback(() => {
     let imgHeight = imgElement?.current?.clientHeight || 0;
     let imgWidth = imgElement?.current?.clientWidth || 0;
 
     setImgSize([imgWidth, imgHeight]);
-  };
+  }, [setImgSize]);
 
   const handleAddMarker = (event: React.MouseEvent<HTMLElement>): void => {
     let markerText = prompt("Please, enter text for label:");
@@ -52,10 +54,9 @@ function App() {
     }
   };
 
-  (function () {
-    window.addEventListener("resize", resizeThrottler, false);
+  useEffect(() => {
+    window.addEventListener("resize", resizeThrottler);
 
-    let resizeTimeout: NodeJS.Timeout | null;
     function resizeThrottler() {
       if (!resizeTimeout) {
         resizeTimeout = setTimeout(function () {
@@ -64,7 +65,11 @@ function App() {
         }, 66);
       }
     }
-  })();
+
+    return () => {
+      window.removeEventListener("resize", resizeThrottler);
+    };
+  }, [updateImageSizes]);
 
   let coordsMarkers = markers.map(({ percentX, percentY, text, id }) => {
     return {
