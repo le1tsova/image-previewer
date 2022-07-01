@@ -5,13 +5,13 @@ interface IProps {
 }
 
 const Marker: React.FC<IProps> = ({ coordX, coordY, text }) => {
-  let infoStyle = {
+  const markerStyle = {
     left: coordX,
     top: coordY,
   };
 
   return (
-    <div className="marker" style={infoStyle}>
+    <div className="marker" style={markerStyle}>
       {text}
     </div>
   );

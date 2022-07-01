@@ -25,24 +25,24 @@ function App() {
     setMarkers([]);
 
     if (event?.target?.files?.length) {
-      let image = window.URL.createObjectURL(event?.target.files[0]);
+      const image = window.URL.createObjectURL(event?.target.files[0]);
       setImageLink(image);
     }
   };
 
   const updateImageSizes = useCallback(() => {
-    let imgHeight = imgElement?.current?.clientHeight || 0;
-    let imgWidth = imgElement?.current?.clientWidth || 0;
+    const imgHeight = imgElement?.current?.clientHeight || 0;
+    const imgWidth = imgElement?.current?.clientWidth || 0;
 
     setImgSize([imgWidth, imgHeight]);
   }, [setImgSize]);
 
   const handleAddMarker = (event: React.MouseEvent<HTMLElement>): void => {
-    let markerText = prompt("Please, enter text for label:");
+    const markerText = prompt("Please, enter text for label:");
 
     if (markerText && /[\w?!.+-]/i.test(markerText)) {
-      let percentX = Math.floor((event?.pageX / imgSize[0]) * 100);
-      let percentY = Math.floor((event?.pageY / imgSize[1]) * 100);
+      const percentX = Math.floor((event?.pageX / imgSize[0]) * 100);
+      const percentY = Math.floor((event?.pageY / imgSize[1]) * 100);
 
       const m = {
         percentX: percentX,
@@ -71,7 +71,7 @@ function App() {
     };
   }, [updateImageSizes]);
 
-  let coordsMarkers = markers.map(({ percentX, percentY, text, id }) => {
+  const coordsMarkers = markers.map(({ percentX, percentY, text, id }) => {
     return {
       coordX: Math.floor((imgSize[0] / 100) * percentX),
       coordY: Math.floor((imgSize[1] / 100) * percentY),
