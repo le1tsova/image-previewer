@@ -1,9 +1,17 @@
-# image-previewer
+# Image previewer
 
-- позволяет загружать изображение в браузер и видеть preview этого изображения.
-- на изображение можно накладывать метки. При resize окна изображение масштабируется, метки сохраняют свои позиции относительно краев изображения.
+## Acceptance criteria:
 
-### Запуск проекта
+- The application should have the ability to upload images, and the user should be able to preview the uploaded image.
+- The user can create labels on the image. A label is a div with arbitrary text.
+- When resizing the browser window, the labels should automatically save their positions relative to the edges of the image.
+
+## The required technologies:
+
+- React
+- TypeScript
+
+## Run the app in development mode:
 
 ```
 npm i
